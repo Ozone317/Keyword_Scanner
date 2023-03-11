@@ -33,7 +33,8 @@ def extractKeywords(text: str):
 
 
 if __name__ == "__main__":
-    app.run()
-
+    from waitress import serve
+    serve(app, port=5000)
+    # app.run(debug=True)
 
 
