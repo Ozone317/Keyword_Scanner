@@ -1,5 +1,6 @@
 from collections import defaultdict
 from flask import Flask, request, jsonify
+from json import loads
 
 app = Flask(__name__)
 
@@ -11,13 +12,21 @@ def home():
 # collection = {"text": "TEXT_FROM_USER"}
 @app.route("/getkeywords", methods=["POST"])
 def getKeywords():
-    res = request.get_json()
-    
-    text = res["text"]
-    data = extractKeywords(text)
-    # print(text)
+    try:
+        variable = request.get_data()
+        text = loads(variable)
+        # print(type(text))
+        # print(text)
 
-    return jsonify({"data": data})
+        # res = request.get_json()
+        # print(type(res))
+
+        text = text["text"]
+        data = extractKeywords(text)
+        # print(text)
+        return jsonify({"data": data})
+    except:
+        return jsonify({"message": "Invalid format"})
 
 
 from rake_nltk import Rake
